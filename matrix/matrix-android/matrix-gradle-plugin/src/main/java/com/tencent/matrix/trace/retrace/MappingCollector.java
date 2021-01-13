@@ -24,6 +24,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.tencent.matrix.javalib.util.Log;
 /**
  * Created by caichongyang on 2017/8/3.
  */
@@ -40,7 +41,16 @@ public class MappingCollector implements MappingProcessor {
     public boolean processClassMapping(String className, String newClassName) {
         this.mObfuscatedRawClassMap.put(newClassName, className);
         this.mRawObfuscatedClassMap.put(className, newClassName);
-        this.mRawObfuscatedPackageMap.put(className.substring(0, className.lastIndexOf('.')), newClassName.substring(0, newClassName.lastIndexOf('.')));
+
+        int oldIndex = className.lastIndexOf('.');
+        int newIndex =  newClassName.lastIndexOf('.');
+        if (oldIndex == -1 || newIndex == -1) {
+            Log.i(TAG, "className:" + className + ", newClassName:" + newClassName);
+            return false
+        }
+        String oldName = className.substring(0, oldIndex);
+        String newName = newClassName.substring(0, newIndex);
+        this.mRawObfuscatedPackageMap.put(oldName, newName);
         return true;
     }
 
