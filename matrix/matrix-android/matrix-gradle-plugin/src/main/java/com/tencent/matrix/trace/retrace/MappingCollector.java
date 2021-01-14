@@ -46,7 +46,7 @@ public class MappingCollector implements MappingProcessor {
         int newIndex =  newClassName.lastIndexOf('.');
         if (oldIndex == -1 || newIndex == -1) {
             Log.i(TAG, "className:" + className + ", newClassName:" + newClassName);
-            return false
+            return false;
         }
         String oldName = className.substring(0, oldIndex);
         String newName = newClassName.substring(0, newIndex);
